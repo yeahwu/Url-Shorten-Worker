@@ -1,9 +1,9 @@
-const config = {
-  no_ref: "off", //Control the HTTP referrer header, if you want to create an anonymous link that will hide the HTTP Referer header, please set to "on" .
-  theme:"",//Homepage theme, use the empty value for default theme. To use urlcool theme, please fill with "theme/urlcool" .
-  cors: "on",//Allow Cross-origin resource sharing for API requests.
+  const config = {
+    no_ref: "off",
+    theme:"",
+    cors: "on",
   }
-  
+
   const html404 = `<!DOCTYPE html>
   <body>
     <h1>404 Not Found.</h1>
@@ -25,7 +25,7 @@ const config = {
   
   async function randomString(len) {
   　　len = len || 6;
-  　　let $chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';    /****默认去掉了容易混淆的字符oOLl,9gq,Vv,Uu,I1****/
+  　　let $chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';
   　　let maxPos = $chars.length;
   　　let result = '';
   　　for (i = 0; i < len; i++) {
@@ -33,6 +33,7 @@ const config = {
   　　}
   　　return result;
   }
+
   async function checkURL(URL){
       let str=URL;
       let Expression=/http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/;
@@ -46,15 +47,17 @@ const config = {
           return false;
       }
   } 
+
   async function save_url(URL){
-      let random_key=await randomString()
-      let is_exist=await LINKS.get(random_key)
-      console.log(is_exist)
-      if (is_exist == null)
-          return await LINKS.put(random_key, URL, {expirationTtl: 86400}),random_key
-      else
-          save_url(URL)
+        let random_key=await randomString()
+        let is_exist=await LINKS.get(random_key)
+        console.log(is_exist)
+        if (is_exist == null)
+            return await LINKS.put(random_key, URL),random_key
+        else
+            save_url(URL)
   }
+
   async function handleRequest(request) {
     console.log(request)
     if (request.method === "POST") {
@@ -86,7 +89,7 @@ const config = {
     console.log(path)
     if(!path){
   
-      const html= await fetch("https://cdn.jsdelivr.net/gh/yeahwu/Url-Shorten-Worker@gh-pages/index.html")
+      const html= await fetch("https://cdn.jsdelivr.net/gh/yeahwu/Url-Shorten-Worker@gh-pages/shorturl-index.html")
       
       return new Response(await html.text(), {
       headers: {
@@ -112,9 +115,7 @@ const config = {
       status: 404
     })
   }
-  
-  
-  
+    
   addEventListener("fetch", async event => {
     event.respondWith(handleRequest(event.request))
   })
