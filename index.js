@@ -89,7 +89,7 @@
     console.log(path)
     if(!path){
   
-      const html= await fetch("https://cdn.jsdelivr.net/gh/yeahwu/Url-Shorten-Worker@gh-pages/shorturl-index.html")
+      const html= await fetch("https://cdn.jsdelivr.net/gh/yeahwu/Url-Shorten-Worker@gh-pages/index.html")
       
       return new Response(await html.text(), {
       headers: {
