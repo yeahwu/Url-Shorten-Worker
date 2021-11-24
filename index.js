@@ -1,5 +1,4 @@
   const config = {
-    no_ref: "off",
     theme:"",
     cors: "on",
   }
